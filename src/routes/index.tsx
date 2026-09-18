@@ -7,10 +7,10 @@ import { ProductCard, ProductCardSkeleton } from "@/components/product-card";
 import { LegalNotice, SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
 import { categoriesQuery, combosQuery, popularProductsQuery, productsQuery } from "@/lib/catalog";
-import { categoryIcon, categoryTint, comboIcon } from "@/lib/category-icons";
+import { categoryTint } from "@/lib/category-icons";
 import { useLang, pick } from "@/lib/i18n";
 import { inr, SHOP } from "@/lib/shop";
-import heroAsset from "@/assets/hero-diwali.png.asset.json";
+import { siteVisualsQuery } from "@/lib/settings";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -80,14 +80,18 @@ function CategoryRail() {
               <span
                 className={`grid size-16 place-items-center rounded-full ${categoryTint(idx)} transition-transform duration-300 group-hover:-translate-y-1`}
               >
-                <img
-                  src={categoryIcon(c.slug)}
-                  alt={c.name}
-                  loading="lazy"
-                  width={512}
-                  height={512}
-                  className="size-10 object-contain"
-                />
+                {c.image_url ? (
+                  <img
+                    src={c.image_url}
+                    alt={c.name}
+                    loading="lazy"
+                    width={512}
+                    height={512}
+                    className="size-10 object-contain"
+                  />
+                ) : (
+                  <span className="text-xl" aria-hidden="true">{c.emoji ?? "🎇"}</span>
+                )}
               </span>
               <span className="line-clamp-2 text-center text-[11px] font-medium leading-tight">
                 {pick(lang, c.name, c.name_ta)}
@@ -126,7 +130,7 @@ function ComboRail() {
                 </span>
               </div>
               <img
-                src={c.image_url || comboIcon}
+                src={c.image_url || undefined}
                 alt={c.title}
                 loading="lazy"
                 width={512}
@@ -141,6 +145,8 @@ function ComboRail() {
 
 function Home() {
   const { lang, t } = useLang();
+  const visuals = useQuery(siteVisualsQuery);
+  const heroImageUrl = visuals.data?.hero_image_url;
 
   return (
     <SiteShell showFooter>
@@ -186,14 +192,20 @@ function Home() {
             </div>
           </div>
           <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-lg">
-            <img
-              src={heroAsset.url}
-              alt="Diwali crackers gift box, rockets, sparklers and a lit diya lamp"
-              width={1456}
-              height={1080}
-              fetchPriority="high"
-              className="h-64 w-full object-cover md:h-[26rem]"
-            />
+            {heroImageUrl ? (
+              <img
+                src={heroImageUrl}
+                alt="Diwali crackers gift box, rockets, sparklers and a lit diya lamp"
+                width={1456}
+                height={1080}
+                fetchPriority="high"
+                className="h-64 w-full object-cover md:h-[26rem]"
+              />
+            ) : (
+              <div className="grid h-64 place-items-center px-6 text-center text-sm text-muted-foreground md:h-[26rem]">
+                Hero image will appear here once added in Settings.
+              </div>
+            )}
           </div>
         </div>
         <div className="mx-auto w-full max-w-6xl px-4 pb-8">

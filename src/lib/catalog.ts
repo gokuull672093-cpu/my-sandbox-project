@@ -6,20 +6,6 @@ export type Product = Tables<"products">;
 export type Category = Tables<"categories">;
 export type Combo = Tables<"combos">;
 
-export const categoryImage = (slug: string | null | undefined) => {
-  switch (slug) {
-    case "sparklers":
-    case "flower-pots":
-    case "kids":
-      return sparklers.url;
-    case "gift-boxes":
-    case "fancy":
-      return gift.url;
-    default:
-      return ground.url;
-  }
-};
-
 export const AVAILABILITY_LABEL: Record<string, string> = {
   available: "Available",
   limited: "Limited",

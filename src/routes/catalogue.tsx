@@ -7,7 +7,7 @@ import { ProductCard, ProductCardSkeleton } from "@/components/product-card";
 import { SiteShell } from "@/components/site-shell";
 import { Input } from "@/components/ui/input";
 import { categoriesQuery, EXPERIENCES, productsQuery } from "@/lib/catalog";
-import { categoryIcon, categoryTint } from "@/lib/category-icons";
+import { categoryTint } from "@/lib/category-icons";
 import { pick, useLang } from "@/lib/i18n";
 
 type CatalogueSearch = { category?: string; experience?: string; q?: string };
@@ -116,14 +116,18 @@ function Catalogue() {
                       <span
                         className={`grid size-14 place-items-center rounded-full transition-transform duration-300 group-hover:-translate-y-1 ${categoryTint(idx)} ${on ? "ring-2 ring-primary ring-offset-2" : ""}`}
                       >
-                        <img
-                          src={categoryIcon(c.slug)}
-                          alt={c.name}
-                          loading="lazy"
-                          width={512}
-                          height={512}
-                          className="size-9 object-contain"
-                        />
+                        {c.image_url ? (
+                          <img
+                            src={c.image_url}
+                            alt={c.name}
+                            loading="lazy"
+                            width={512}
+                            height={512}
+                            className="size-9 object-contain"
+                          />
+                        ) : (
+                          <span className="text-lg" aria-hidden="true">{c.emoji ?? "🎇"}</span>
+                        )}
                       </span>
                       <span
                         className={`line-clamp-2 text-center text-[11px] leading-tight ${on ? "font-semibold text-primary" : "font-medium"}`}
