@@ -129,14 +129,16 @@ function ComboRail() {
                   <ArrowRight className="size-3.5 text-background" />
                 </span>
               </div>
-              <img
-                src={c.image_url || undefined}
-                alt={c.title}
-                loading="lazy"
-                width={512}
-                height={512}
-                className="absolute -bottom-2 right-0 size-28 object-contain opacity-95"
-              />
+              {c.image_url && (
+                <img
+                  src={c.image_url}
+                  alt={c.title}
+                  loading="lazy"
+                  width={512}
+                  height={512}
+                  className="absolute -bottom-2 right-0 size-28 object-contain opacity-95"
+                />
+              )}
             </Link>
           ))}
     </div>
