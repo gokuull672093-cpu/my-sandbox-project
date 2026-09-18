@@ -2,10 +2,6 @@ import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-import sparklers from "@/assets/cat-sparklers.jpg.asset.json";
-import ground from "@/assets/cat-ground.jpg.asset.json";
-import gift from "@/assets/cat-gift.jpg.asset.json";
-
 export type Product = Tables<"products">;
 export type Category = Tables<"categories">;
 export type Combo = Tables<"combos">;
