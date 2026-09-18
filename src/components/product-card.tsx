@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { categoryImage, PROMO_TAG_LABEL, type Product } from "@/lib/catalog";
+import { PROMO_TAG_LABEL, type Product } from "@/lib/catalog";
 import { useCart } from "@/lib/enquiry-cart";
 import { pick, useLang } from "@/lib/i18n";
 import { inr } from "@/lib/shop";
@@ -48,14 +48,18 @@ export function ProductCard({
   return (
     <div className="group elevate elevate-hover flex flex-col overflow-hidden rounded-2xl border border-border bg-card">
       <div className="relative aspect-square overflow-hidden bg-secondary/40">
-        <img
-          src={product.image_url || categoryImage(categorySlug)}
-          alt={product.name}
-          loading="lazy"
-          width={900}
-          height={900}
-          className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+        {product.image_url ? (
+          <img
+            src={product.image_url}
+            alt={product.name}
+            loading="lazy"
+            width={900}
+            height={900}
+            className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="grid size-full place-items-center text-3xl text-muted-foreground" aria-hidden="true">🎇</div>
+        )}
         {promoTag && (
           <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground shadow-sm">
             {PROMO_TAG_LABEL[promoTag]}

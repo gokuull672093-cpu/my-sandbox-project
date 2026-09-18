@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { categoriesQuery, categoryImage, productsQuery } from "@/lib/catalog";
+import { categoriesQuery, productsQuery } from "@/lib/catalog";
 import { useCart } from "@/lib/enquiry-cart";
 import { pick as pickLang, useLang } from "@/lib/i18n";
 import { inr } from "@/lib/shop";
@@ -155,14 +155,18 @@ function BuildBox() {
         {!loading && activeCat && (
           <div className="mt-5 space-y-2">
             <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-3">
-              <img
-                src={activeCat.image_url || categoryImage(activeCat.slug)}
-                alt={activeCat.name}
-                loading="lazy"
-                width={96}
-                height={96}
-                className="size-12 rounded-lg object-cover"
-              />
+              {activeCat.image_url ? (
+                <img
+                  src={activeCat.image_url}
+                  alt={activeCat.name}
+                  loading="lazy"
+                  width={96}
+                  height={96}
+                  className="size-12 rounded-lg object-cover"
+                />
+              ) : (
+                <div className="grid size-12 place-items-center rounded-lg bg-secondary text-lg" aria-hidden="true">{activeCat.emoji ?? "🎇"}</div>
+              )}
               <div>
                 <p className="text-sm font-semibold">
                   {activeCat.emoji} {pickLang(lang, activeCat.name, activeCat.name_ta)}
@@ -178,14 +182,18 @@ function BuildBox() {
                   key={p.id}
                   className={`flex items-center gap-3 rounded-xl border bg-card p-3 ${qty > 0 ? "border-primary" : "border-border"}`}
                 >
-                  <img
-                    src={p.image_url || categoryImage(activeCat.slug)}
-                    alt={p.name}
-                    loading="lazy"
-                    width={96}
-                    height={96}
-                    className="size-12 shrink-0 rounded-lg object-cover"
-                  />
+                  {p.image_url ? (
+                    <img
+                      src={p.image_url}
+                      alt={p.name}
+                      loading="lazy"
+                      width={96}
+                      height={96}
+                      className="size-12 shrink-0 rounded-lg object-cover"
+                    />
+                  ) : (
+                    <div className="grid size-12 shrink-0 place-items-center rounded-lg bg-secondary text-lg" aria-hidden="true">🎇</div>
+                  )}
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">
                       {pickLang(lang, p.name, p.name_ta)}
@@ -246,14 +254,18 @@ function BuildBox() {
                 key={product.id}
                 className="flex items-center gap-3 rounded-xl border border-border bg-card p-3"
               >
-                <img
-                  src={product.image_url || categoryImage(null)}
-                  alt={product.name}
-                  loading="lazy"
-                  width={96}
-                  height={96}
-                  className="size-12 shrink-0 rounded-lg object-cover"
-                />
+                {product.image_url ? (
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    loading="lazy"
+                    width={96}
+                    height={96}
+                    className="size-12 shrink-0 rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="grid size-12 shrink-0 place-items-center rounded-lg bg-secondary text-lg" aria-hidden="true">🎇</div>
+                )}
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">
                     {pickLang(lang, product.name, product.name_ta)}

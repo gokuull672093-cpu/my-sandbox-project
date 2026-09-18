@@ -2,27 +2,9 @@ import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
 
-import sparklers from "@/assets/cat-sparklers.jpg.asset.json";
-import ground from "@/assets/cat-ground.jpg.asset.json";
-import gift from "@/assets/cat-gift.jpg.asset.json";
-
 export type Product = Tables<"products">;
 export type Category = Tables<"categories">;
 export type Combo = Tables<"combos">;
-
-export const categoryImage = (slug: string | null | undefined) => {
-  switch (slug) {
-    case "sparklers":
-    case "flower-pots":
-    case "kids":
-      return sparklers.url;
-    case "gift-boxes":
-    case "fancy":
-      return gift.url;
-    default:
-      return ground.url;
-  }
-};
 
 export const AVAILABILITY_LABEL: Record<string, string> = {
   available: "Available",

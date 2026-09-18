@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { categoryImage, combosQuery } from "@/lib/catalog";
+import { combosQuery } from "@/lib/catalog";
 import { useCart } from "@/lib/enquiry-cart";
 import { pick, useLang } from "@/lib/i18n";
 import { inr } from "@/lib/shop";
@@ -81,13 +81,17 @@ function ComboDetail() {
         </Link>
 
         <div className="mt-3 overflow-hidden rounded-2xl border border-border bg-card">
-          <img
-            src={combo.image_url || categoryImage("gift-boxes")}
-            alt={combo.title}
-            width={1200}
-            height={600}
-            className="h-44 w-full object-cover sm:h-56"
-          />
+          {combo.image_url ? (
+            <img
+              src={combo.image_url}
+              alt={combo.title}
+              width={1200}
+              height={600}
+              className="h-44 w-full object-cover sm:h-56"
+            />
+          ) : (
+            <div className="grid h-44 place-items-center bg-secondary text-4xl sm:h-56" aria-hidden="true">🎁</div>
+          )}
           <div className="p-5">
             <h1 className="text-2xl font-semibold">🎇 {pick(lang, combo.title, combo.title_ta)}</h1>
             <p className="mt-1 text-sm text-muted-foreground">{combo.description}</p>
@@ -105,14 +109,18 @@ function ComboDetail() {
               const mrp = p.mrp == null ? null : Number(p.mrp);
               return (
                 <div key={idx} className="flex items-center gap-3 p-3">
-                  <img
-                    src={p.image_url || categoryImage(null)}
-                    alt={p.name}
-                    loading="lazy"
-                    width={64}
-                    height={48}
-                    className="h-12 w-16 shrink-0 rounded-md border border-border object-cover"
-                  />
+                  {p.image_url ? (
+                    <img
+                      src={p.image_url}
+                      alt={p.name}
+                      loading="lazy"
+                      width={64}
+                      height={48}
+                      className="h-12 w-16 shrink-0 rounded-md border border-border object-cover"
+                    />
+                  ) : (
+                    <div className="grid h-12 w-16 shrink-0 place-items-center rounded-md border border-border bg-secondary text-lg" aria-hidden="true">🎇</div>
+                  )}
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium">{pick(lang, p.name, p.name_ta)}</p>
                     <p className="text-xs text-muted-foreground">

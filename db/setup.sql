@@ -349,6 +349,10 @@ insert into public.app_settings (key, value)
 values ('order', '{"min_order_value": 0}'::jsonb)
 on conflict (key) do nothing;
 
+insert into public.app_settings (key, value)
+values ('site_visuals', '{"hero_image_url": ""}'::jsonb)
+on conflict (key) do nothing;
+
 insert into public.coupons (code, label, discount_type, value, min_value, max_discount)
 values
   ('DIWALI10', '10% off on orders above 2000', 'percent', 10, 2000, 500),

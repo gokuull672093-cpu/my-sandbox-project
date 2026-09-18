@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 
 import { SiteShell } from "@/components/site-shell";
 import { Skeleton } from "@/components/ui/skeleton";
-import { categoryImage, combosQuery } from "@/lib/catalog";
+import { combosQuery } from "@/lib/catalog";
 import { pick, useLang } from "@/lib/i18n";
 import { inr } from "@/lib/shop";
 
@@ -63,14 +63,18 @@ function Combos() {
                     params={{ slug: combo.slug }}
                     className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-border bg-card transition-shadow hover:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)]"
                   >
-                    <img
-                      src={combo.image_url || categoryImage("gift-boxes")}
-                      alt={combo.title}
-                      loading="lazy"
-                      width={900}
-                      height={900}
-                      className="h-36 w-full object-cover"
-                    />
+                    {combo.image_url ? (
+                      <img
+                        src={combo.image_url}
+                        alt={combo.title}
+                        loading="lazy"
+                        width={900}
+                        height={900}
+                        className="h-36 w-full object-cover"
+                      />
+                    ) : (
+                      <div className="grid h-36 place-items-center bg-secondary text-3xl" aria-hidden="true">🎁</div>
+                    )}
                     <div className="flex flex-1 flex-col p-4">
                       <h2 className="cursor-pointer text-lg font-semibold group-hover:text-primary">
                         🎇 {pick(lang, combo.title, combo.title_ta)}
