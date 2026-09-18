@@ -226,8 +226,10 @@ function CategoriesPage() {
                 </div>
               </div>
               <div className="space-y-1.5">
-                <Label>Image URL</Label>
+                 <Label>Image link</Label>
                 <Input
+                   type="url"
+                   placeholder="https://…"
                   value={draft.image_url ?? ""}
                   onChange={(e) => setDraft({ ...draft, image_url: e.target.value })}
                 />

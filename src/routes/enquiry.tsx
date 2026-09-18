@@ -20,7 +20,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { citiesFor, STATES, TAMIL_NADU } from "@/lib/india-locations";
 import { orderSettingsQuery } from "@/lib/settings";
-import { categoryImage, couponDiscount, couponsQuery, productsQuery } from "@/lib/catalog";
+import { couponDiscount, couponsQuery, productsQuery } from "@/lib/catalog";
 import { track } from "@/lib/analytics";
 import { readSource, useCart } from "@/lib/enquiry-cart";
 import { submitEnquiry } from "@/lib/enquiry.functions";
@@ -317,14 +317,18 @@ function EnquiryPage() {
               const lineSaved = hasMrp ? (i.mrp! - i.price) * i.qty : 0;
               return (
                 <div key={i.productId} className="flex items-start gap-3 p-3">
-                  <img
-                    src={i.imageUrl || categoryImage(i.categorySlug)}
-                    alt={i.name}
-                    loading="lazy"
-                    width={64}
-                    height={48}
-                    className="h-12 w-16 shrink-0 rounded-md border border-border object-cover"
-                  />
+                  {i.imageUrl ? (
+                    <img
+                      src={i.imageUrl}
+                      alt={i.name}
+                      loading="lazy"
+                      width={64}
+                      height={48}
+                      className="h-12 w-16 shrink-0 rounded-md border border-border object-cover"
+                    />
+                  ) : (
+                    <div className="grid h-12 w-16 shrink-0 place-items-center rounded-md border border-border bg-secondary text-lg" aria-hidden="true">🎇</div>
+                  )}
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium leading-snug">{pick(lang, i.name, i.nameTa)}</p>
                     <p className="text-xs text-muted-foreground">
@@ -419,14 +423,18 @@ function EnquiryPage() {
                           {off}% OFF
                         </span>
                       )}
-                      <img
-                        src={p.image_url || categoryImage(null)}
-                        alt={p.name}
-                        loading="lazy"
-                        width={160}
-                        height={96}
-                        className="h-16 w-full rounded-lg object-cover"
-                      />
+                      {p.image_url ? (
+                        <img
+                          src={p.image_url}
+                          alt={p.name}
+                          loading="lazy"
+                          width={160}
+                          height={96}
+                          className="h-16 w-full rounded-lg object-cover"
+                        />
+                      ) : (
+                        <div className="grid h-16 w-full place-items-center rounded-lg bg-secondary text-xl" aria-hidden="true">🎇</div>
+                      )}
                       <p className="mt-1.5 line-clamp-2 text-[11px] font-medium leading-tight">
                         {pick(lang, p.name, p.name_ta)}
                       </p>
@@ -459,14 +467,18 @@ function EnquiryPage() {
                 <div className="-mx-1 mt-3 flex gap-2.5 overflow-x-auto px-1 pb-1">
                   {suggestions.map((p) => (
                     <div key={p.id} className="w-24 shrink-0 rounded-xl border border-border p-1.5">
-                      <img
-                        src={p.image_url || categoryImage(null)}
-                        alt={p.name}
-                        loading="lazy"
-                        width={160}
-                        height={96}
-                        className="h-14 w-full rounded-lg object-cover"
-                      />
+                      {p.image_url ? (
+                        <img
+                          src={p.image_url}
+                          alt={p.name}
+                          loading="lazy"
+                          width={160}
+                          height={96}
+                          className="h-14 w-full rounded-lg object-cover"
+                        />
+                      ) : (
+                        <div className="grid h-14 w-full place-items-center rounded-lg bg-secondary text-lg" aria-hidden="true">🎇</div>
+                      )}
                       <p className="mt-1.5 line-clamp-2 text-[11px] font-medium leading-tight">
                         {pick(lang, p.name, p.name_ta)}
                       </p>
